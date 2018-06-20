@@ -11,7 +11,7 @@ import UIKit
 //======================================================================================================================
 class TaskEntityViewModel: TaskEntityModel {
     
-    init(
+    init (
         taskModel: TaskEntityModel
         )
     {
@@ -19,13 +19,13 @@ class TaskEntityViewModel: TaskEntityModel {
                    percentage: taskModel.intPercentage!, done: taskModel.boolDone!)
     }
     
-    override init(
+    override init (
         )
     {
         super.init()
     }
     //------------------------------------------------------------------------------------------------------------------
-    public func AddTask(
+    public func AddTask (
         strName_I: String,
         strDescription_I: String,
         intPercentage_I: Int,
@@ -42,11 +42,10 @@ class TaskEntityViewModel: TaskEntityModel {
         self.boolDone = taskEntityInsert.boolDone;
         
         TaskDao.AddTask(task_I: taskEntityInsert);
-       
     }
     
     //------------------------------------------------------------------------------------------------------------------
-    public func EditTask(
+    public func EditTask (
         strName_I: String,
         strDescription_I: String,
         intPercentage_I: Int,
@@ -59,11 +58,11 @@ class TaskEntityViewModel: TaskEntityModel {
         self.boolDone = boolDone_I
         
         TaskDao.EditTask(task_I: self)
-        
     }
     
     //------------------------------------------------------------------------------------------------------------------
-    public func DeleteTask(
+    public func DeleteTask (
+        //
         )
     {
         TaskDao.DeleteTask(task_I: self)

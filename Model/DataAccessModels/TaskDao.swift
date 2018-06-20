@@ -16,9 +16,9 @@ class TaskDao: NSObject {
     
     
     public static func AddTask(
-        //                                                  //Agrega una nueva tarea
+        //                                                  //Adds a new task
         
-        //                                                  //Objeto task a agregar
+        //                                                  //Object
         task_I: TaskEntityModel
     )
     {
@@ -30,9 +30,9 @@ class TaskDao: NSObject {
     
     //------------------------------------------------------------------------------------------------------------------
     public static func EditTask(
-        //                                                   //Edita una tarea
+        //                                                   //Edits the task
         
-        //                                                   //Objeto task a modificar
+        //                                                   //Object
         task_I: TaskEntityModel
         )
     {
@@ -42,9 +42,9 @@ class TaskDao: NSObject {
     
     //------------------------------------------------------------------------------------------------------------------
     public static func DeleteTask(
-        //                                                   //Elimina una tarea
+        //                                                   //Deletes the task
         
-        //                                                   //Objeto task a eliminar
+        //                                                   //Object
         task_I: TaskEntityModel
         )
     {

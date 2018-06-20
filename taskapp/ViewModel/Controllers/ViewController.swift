@@ -29,6 +29,7 @@ class ViewController: UIViewController {
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
+
     }
 
     @IBAction func btnSaveClick(_ sender: UIButton) {
@@ -38,18 +39,58 @@ class ViewController: UIViewController {
     @IBAction func btnDeleteClick(_ sender: UIButton) {
     }
     
+    
+    @IBAction func sliderValue(_ sender: UISlider) {
+        
+        let intCurrentValue: Int;
+        
+        if (
+            switchDone.isOn
+            )
+        {
+            intCurrentValue = 100;
+            sliderPercentage.value = sliderPercentage.maximumValue;
+        }
+        else {
+            intCurrentValue =  Int(sliderPercentage.value);
+        }
+        
+        lblPercentage.text = "\(intCurrentValue)" + "%";
+        
+        if (
+            intCurrentValue == Int(sliderPercentage.maximumValue)
+            ){
+            switchDone.setOn(true, animated: true)
+        }
+        
+        
+        
+    }
+    
+    @IBAction func SwitchValue(_ sender: UISwitch) {
+        if (
+            switchDone.isOn
+            )
+        {
+            sliderPercentage.value = 100;
+            lblPercentage.text = "\(Int(sliderPercentage.value))" + "%";
+        }
+    }
+    
+    
+    
     private func AddNewTask(){
         
         self.taskVM?.AddTask(strName_I: tfTitle.text!, strDescription_I: tvDescription.text, intPercentage_I: 10,
                         boolDone_I: false);
         
-        //Desplegar una alerta
+        //Show alert
 
-        //Crear alert
+        //Cerate new alert.
         let alert = UIAlertController(title: "TaskApp", message: "The task: " + (self.taskVM?.strName)! + " was created", preferredStyle: UIAlertControllerStyle.alert);
         
         
-        //Crear accion
+        //Create action and navigation.
         let action = UIAlertAction(title: "Ok", style: UIAlertActionStyle.default)
         {
             _ in alert.dismiss(animated: true, completion: nil);
