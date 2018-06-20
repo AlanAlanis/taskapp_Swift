@@ -10,8 +10,17 @@ import UIKit
 
 class ViewController: UIViewController {
     
-    var taskVM: TaskEntityViewModel? = TaskEntityViewModel();
-
+    var taskVM: TaskEntityViewModel?
+    {
+        didSet
+        {
+            BindingControls()
+        }
+    }
+    
+    private var boolEdit: Bool = false;
+    
+    var intCurrentValue: Int = 50;
     @IBOutlet weak var tfTitle: UITextField!
     @IBOutlet weak var tvDescription: UITextView!
     @IBOutlet weak var btnSave: UIButton!
@@ -23,26 +32,38 @@ class ViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view, typically from a nib.
-    }
 
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-
-    }
-
-    @IBAction func btnSaveClick(_ sender: UIButton) {
-        AddNewTask();
+        BindingControls()
     }
     
+    //------------------------------------------------------------------------------------------------------------------
+    override func didReceiveMemoryWarning() {
+        super.didReceiveMemoryWarning()
+
+    }
+
+    //------------------------------------------------------------------------------------------------------------------
+    @IBAction func btnSaveClick(_ sender: UIButton) {
+        
+        if (
+            boolEdit
+            )
+        {
+            EditNewTask()
+        }
+        else
+        {
+           AddNewTask();
+        }
+       
+    }
+    
+    //------------------------------------------------------------------------------------------------------------------
     @IBAction func btnDeleteClick(_ sender: UIButton) {
     }
     
-    
+    //------------------------------------------------------------------------------------------------------------------
     @IBAction func sliderValue(_ sender: UISlider) {
-        
-        let intCurrentValue: Int;
         
         if (
             switchDone.isOn
@@ -51,7 +72,8 @@ class ViewController: UIViewController {
             intCurrentValue = 100;
             sliderPercentage.value = sliderPercentage.maximumValue;
         }
-        else {
+        else
+        {
             intCurrentValue =  Int(sliderPercentage.value);
         }
         
@@ -59,15 +81,15 @@ class ViewController: UIViewController {
         
         if (
             intCurrentValue == Int(sliderPercentage.maximumValue)
-            ){
+            )
+        {
             switchDone.setOn(true, animated: true)
         }
-        
-        
-        
     }
     
+    //------------------------------------------------------------------------------------------------------------------
     @IBAction func SwitchValue(_ sender: UISwitch) {
+        
         if (
             switchDone.isOn
             )
@@ -75,14 +97,18 @@ class ViewController: UIViewController {
             sliderPercentage.value = 100;
             lblPercentage.text = "\(Int(sliderPercentage.value))" + "%";
         }
+        else {
+            lblPercentage.text = "\(intCurrentValue)" + "%";
+            sliderPercentage.value = Float(intCurrentValue);
+        }
     }
     
-    
-    
+    //------------------------------------------------------------------------------------------------------------------
     private func AddNewTask(){
         
-        self.taskVM?.AddTask(strName_I: tfTitle.text!, strDescription_I: tvDescription.text, intPercentage_I: 10,
-                        boolDone_I: false);
+        taskVM = TaskEntityViewModel();
+        self.taskVM?.AddTask(strName_I: tfTitle.text!, strDescription_I: tvDescription.text,
+                             intPercentage_I: intCurrentValue ,boolDone_I: switchDone.isOn);
         
         //Show alert
 
@@ -101,7 +127,50 @@ class ViewController: UIViewController {
         self.present(alert, animated: true, completion: nil);
     }
     
+    //------------------------------------------------------------------------------------------------------------------
     private func EditNewTask(){
+        
+    }
+    
+    private func BindingControls()
+    {
+            if  (
+                !self.isViewLoaded
+                )
+            {
+                return
+            }
+        
+        guard let taskVM = self.taskVM else {
+            self.taskVM = TaskEntityViewModel();
+            return
+        }
+        
+        if  (
+            taskVM.intId != nil
+            )
+        {
+            boolEdit = true
+            btnCancel.isHidden = false
+            
+            self.tfTitle.text = taskVM.strName
+            self.tvDescription.text = taskVM.strDescription
+            self.sliderPercentage.value = Float((taskVM.intPercentage)!)
+            self.lblPercentage.text = (taskVM.intPercentage?.description)! + " %"
+            
+            if (
+                taskVM.intPercentage == 100
+                )
+            {
+                self.switchDone.setOn(true, animated: true)
+            }
+            else
+            {
+                self.switchDone.setOn(false, animated: true)
+            }
+        }
+        
+        
         
     }
     

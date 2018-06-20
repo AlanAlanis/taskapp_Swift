@@ -37,7 +37,7 @@ class TaskListViewController: UIViewController, UITableViewDataSource, UITableVi
         
         //Se obtiene el view controller del destino
         let vcViewControllerDestino: ViewController = self.storyboard?.instantiateViewController(
-            withIdentifier: "ViewControllerTask") as! ViewController
+            withIdentifier: "viewControllerTask") as! ViewController
         
         //Se manda la tarea al view controller
         vcViewControllerDestino.taskVM = self.task;
